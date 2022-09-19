@@ -1,6 +1,5 @@
 import io.restassured.response.Response;
 import model.dto.User;
-import model.dto.UserFactory;
 import model.ui.AccountPage;
 import org.junit.*;
 
@@ -17,7 +16,7 @@ public class AccountTest extends BaseTest {
     public static void setUp() {
         accountPage = new AccountPage(driver);
         // создать пользователя и получить токены
-        User user = UserFactory.getDefaultUser();
+        User user = User.getDefaultUser();
         Response response = apiClient.createUser(user);
         accessToken = response.then().extract().path("accessToken");
         refreshToken = response.then().extract().path("refreshToken");

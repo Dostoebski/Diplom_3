@@ -3,6 +3,9 @@ package model.util;
 import io.restassured.response.Response;
 import model.dto.User;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static io.restassured.RestAssured.given;
 
 public class BurgerClient extends RestClient {
@@ -25,9 +28,10 @@ public class BurgerClient extends RestClient {
         }
 
         public Response login(User user) {
-            String credentials = String.format(
-                    "{ \"email\": \"%s\", \"password\": \"%s\" }", user.getEmail(), user.getPassword()
-            );
+            Map<String, String> credentials = new HashMap<>();
+            credentials.put("email", user.getEmail());
+            credentials.put("password", user.getPassword());
+
             return given()
                     .spec(getBaseSpec())
                     .body(credentials)

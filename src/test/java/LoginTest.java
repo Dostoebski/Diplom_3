@@ -1,5 +1,4 @@
 import model.dto.User;
-import model.dto.UserFactory;
 import model.ui.MainPage;
 import model.ui.RestorePasswordPage;
 import model.ui.RegisterPage;
@@ -21,7 +20,7 @@ public class LoginTest extends BaseTest {
         mainPage = new MainPage(driver);
         restoringPage = new RestorePasswordPage(driver);
 
-        user = UserFactory.getDefaultUser();
+        user = User.getDefaultUser();
         accessToken = apiClient.createUser(user).then().extract().path("accessToken");
     }
 

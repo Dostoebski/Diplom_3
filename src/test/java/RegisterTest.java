@@ -1,6 +1,5 @@
 import io.restassured.response.Response;
 import model.dto.User;
-import model.dto.UserFactory;
 import model.ui.RegisterPage;
 import org.junit.After;
 import org.junit.Before;
@@ -8,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.apache.http.HttpStatus.SC_OK;
+import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -24,7 +24,7 @@ public class RegisterTest extends BaseTest {
 
     @Before
     public void openPage() {
-        user = UserFactory.getDefaultUser();
+        user = User.getDefaultUser();
 
         step("Перейти на страницу регистрации");
         driver.get(baseUrl + "register");
@@ -57,6 +57,12 @@ public class RegisterTest extends BaseTest {
         step("Проверить, что отобразилась ошибка ввода пароля");
         String error = registerPage.inputErrorText();
         assertEquals("Error message doesn't match", "Некорректный пароль", error);
+
+        step("Проверить, что пользователя не существует");
+        Response response = apiClient.login(user);
+        int statusCode = response.then().extract().statusCode();
+        assertEquals("login must fail", SC_UNAUTHORIZED, statusCode);
+        accessToken = response.then().extract().path("accessToken");
     }
 
     @After

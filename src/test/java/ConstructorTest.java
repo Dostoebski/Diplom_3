@@ -3,6 +3,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ConstructorTest extends BaseTest {
 
@@ -17,7 +18,7 @@ public class ConstructorTest extends BaseTest {
 
     @Test
     public void selectingTabsWorks() {
-        String expectedClassName = "tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect";
+        String expectedClassName = "tab_tab_type_current__2BEPc";
 
         step("Перейти на вкладку Соусы");
         String className = mainPage
@@ -25,7 +26,7 @@ public class ConstructorTest extends BaseTest {
                 .getSaucesButtonClassName();
 
         step("Проверить, что вкладка выбрана");
-        assertEquals(expectedClassName, className);
+        assertTrue(className.contains(expectedClassName));
 
         step("Перейти на вкладку Начинки");
         className = mainPage
@@ -33,7 +34,7 @@ public class ConstructorTest extends BaseTest {
                 .getFillingsButtonClassName();
 
         step("Проверить, что вкладка выбрана");
-        assertEquals(expectedClassName, className);
+        assertTrue(className.contains(expectedClassName));
 
         step("Перейти на вкладку Булки");
         className = mainPage
@@ -41,6 +42,6 @@ public class ConstructorTest extends BaseTest {
                 .getBunsButtonClassName();
 
         step("Проверить, что вкладка выбрана");
-        assertEquals(expectedClassName, className);
+        assertTrue(className.contains(expectedClassName));
     }
 }
